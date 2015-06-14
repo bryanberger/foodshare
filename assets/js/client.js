@@ -3,8 +3,14 @@ $(function(){
 
 	// stall video loading as to not break the android app
 	// setTimeout(function(){
-	// 	$('#video').attr("src", "http://10.1.25.61:4747/mjpegfeed");
+		// setInterval(function(){
+		// 	$('#item-0 #video').attr("src", "http://10.1.24.42:8080/shot.jpg?" + Math.random());
+		// }, 30);
+		// $('#video').attr("src", "http://10.1.25.61:4747/mjpegfeed");
 	// }, 3000);
+	setInterval(function(){
+		$('#item-0 #video').attr("src", "http://10.1.24.42:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
+	}, 200);
 
 	/* Click Handlers */
 	$('.interested').click(function() {
@@ -14,7 +20,7 @@ $(function(){
 	});
 
 	$('.share').click(function() {
-		socket.emit('share', true);
+		socket.emit('share', {id:0, enable:true});
 		window.location = '/share';
 	});
 
@@ -39,51 +45,46 @@ $(function(){
 	socket.on('foodWeightChange', function(value) {
 		console.log('foodWeightChange', value);
 
-		foodPercentageGauge.refresh(value.data);
-		$('.weight .progress-bar').css('width', value.data+'%').attr('aria-valuenow', value.data); 
+		if (document.getElementById('foodPercentage')) {
+			foodPercentageGauge.refresh(value.data.val);
+		}
+
+		$('#item-' + value.data.id +' .weight .progress-bar').css('width', value.data.val+'%').attr('aria-valuenow', value.data.val); 
 	});
 
-// TEST PURPOSE
-foodPercentageGauge.refresh(78);
-
 	// 0 - 100%
-	socket.emit('freshnessChange', 33);
+	//	socket.emit('freshnessChange', 33);
 	socket.on('freshnessChange', function(value) {
-		console.log('freshnessChange', value);
+		console.log('freshnessChange', value.data.val);
 		
 		var output, cls;
+		var val = value.data.val; 
 
-		if(value >= 0 && value < 25) {
+		if(val >= 0 && val < 25) {
 			output = 'Not so fresh.';
 			cls = 'bad';
-		} else if(value > 25 && value < 50) {
+		} else if(val > 25 && val < 50) {
 			output = 'Pretty fresh.';
 			cls = 'okay';
-		} else if(value > 50 && value < 75) {
+		} else if(val > 50 && val < 75) {
 			output = 'Very fresh.';
 			cls = 'verygood';
-		} else if(value > 75) {
+		} else if(val > 75) {
 			output = 'Amazingly fresh!';
 			cls = 'best';
 		}
 
-// TEST PURPOSE
-output = 'Not so fresh.';
-cls = 'bad';
-		
 		$('.freshness').removeClass('bad okay verygood best').addClass(cls);
 		$('.freshness span').text(output);
-
-		//$('.freshness .progress-bar').css('width', value.data+'%').attr('aria-valuenow', value.data); 
 	});
 
 	// 0 or 1
-	socket.on('eggChange', function(isPresent) {
+	socket.on('eggChange', function(obj) {
 
 		var $egg = $('.eggPresent');
 
-		if(isPresent === 1) {
-			$egg.text('We have fresh eggs!');
+		if(obj.data.val === 1) {
+			$egg.text('We have '+ obj.data.quantity +' fresh eggs!');
 		} else {
 			$egg.text('Sorry, we are out of eggs');
 		}

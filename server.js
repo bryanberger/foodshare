@@ -29,6 +29,8 @@ var credentials = { email: firebase_email, password: firebase_password };
 
 var users = {};
 var mock = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+var mock_live_id = 0; // which mock object is our "live test" for demo purposes
+var num_eggs = 0;
 
 // Firebase
 ref.authWithPassword(credentials, function(err, auth) {
@@ -36,32 +38,41 @@ ref.authWithPassword(credentials, function(err, auth) {
 		console.error('Failed to login with credentials:', err);
 	} else if (auth) {
 
+		console.log('logged into firebase!');
 
 		// What is the weight of our tray?
 		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/milkyWeighs/1ea8fdb9-2418-440b-a67b-fa16210f0c9e/weight').on('value', function(snapshot) {
 			var percentageOfFoodOnTray = JSON.stringify(snapshot.val(), null, 2);
 			console.log("percentageOfFoodOnTray : "  + percentageOfFoodOnTray);
-			io.sockets.emit('foodWeightChange', { data: percentageOfFoodOnTray });
+
+			io.sockets.emit('foodWeightChange', { data: {id: mock_live_id, val: percentageOfFoodOnTray } });
 		});
 
 		// do we have eggs?
-		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/072b3293-d637-4f53-a273-edf8c7711d17/egg_presenct1').on('value', function(snapshot) {
+		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/1ea8fdb9-2418-440b-a67b-fa16210f0d8b/egg_present1').on('value', function(snapshot) {
 			var isPresent = JSON.stringify(snapshot.val(), null, 2);
 			console.log("eggPresent1 : "  + isPresent);
-			io.sockets.emit('eggChange', { data: isPresent });
+
+			countEggs(isPresent);
+
+			io.sockets.emit('eggChange', { data: {id: mock_live_id, val: isPresent, quantity: num_eggs} });
 		});
 
-		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/072b3293-d637-4f53-a273-edf8c7711d17/egg_presenct2').on('value', function(snapshot) {
+		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/1ea8fdb9-2418-440b-a67b-fa16210f0d8b/egg_present2').on('value', function(snapshot) {
 			var isPresent = JSON.stringify(snapshot.val(), null, 2);
 			console.log("eggPresent2 : "  + isPresent);
-			io.sockets.emit('eggChange', { data: isPresent });
+
+			countEggs(isPresent);
+
+			io.sockets.emit('eggChange', { data: {id: mock_live_id, val: isPresent, quantity: num_eggs} });
 		});
 
 		// how fresh is the food? 0-100
-		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/072b3293-d637-4f53-a273-edf8c7711d17/freshness_ind').on('value', function(snapshot) {
+		ref.child('users').child('google:105724342149087020351/devices/chillhubs/dummy/foodshare/1ea8fdb9-2418-440b-a67b-fa16210f0d8b/freshness_ind').on('value', function(snapshot) {
 			var freshness = JSON.stringify(snapshot.val(), null, 2);
 			console.log("freshness % : "  + freshness);
-			io.sockets.emit('freshnessChange', { data: freshness });
+
+			io.sockets.emit('freshnessChange', { data: {id: mock_live_id, val: freshness} });
 		});
 
 	} else {
@@ -69,6 +80,16 @@ ref.authWithPassword(credentials, function(err, auth) {
 		console.error('Make sure you entered your email and password correctly.');
 	}
 });
+
+function countEggs(isPresent) {
+	if(isPresent === 1) {
+		num_eggs++;
+	} else {
+		if(num_eggs != 0) {
+			num_eggs--;
+		}
+	}
+}
 
 // Express Routes
 app.set('view engine', 'jade');
@@ -79,10 +100,6 @@ app.get('/', function(req, res){
 	res.render('index', { data: mock });
 	//res.sendFile(__dirname + '/index.html');
 });
-
-// app.get('/detail', function(req, res){
-// 	res.sendFile(__dirname + '/detail.html');
-// });
 
 app.get('/detail/:id', function(req, res, next) {
 	var id = req.params.id;
@@ -107,6 +124,8 @@ app.get('/notify/:id', function(req, res, next) {
 		return next();
 	}
 
+	obj.subscribe = true;
+
 	res.render('notify', { data: obj });
 });
 
@@ -118,15 +137,16 @@ app.get('/splash', function(req, res){
 	res.render('splash');
 });
 
-// app.get('/notify', function(req, res){
-// 	res.sendFile(__dirname + '/notify.html');
-// });
-
+app.get('/subscribers', function(req, res){
+	res.render('subscribers', {data: mock, users: users});
+});
 
 // Socket IO
 io.on('connection', function(socket) {
 	users[socket.id] = socket;
 	console.log('user connected', Object.keys(users).length);
+
+	socket.emit('foodWeightChange', { data: {id: mock_live_id, val: 33 } });
 
 	socket.on('disconnect', function(){
 		delete users[socket.id];
@@ -137,11 +157,22 @@ io.on('connection', function(socket) {
 		console.log('user is interested in your food');
 	});
 
-	socket.on('share', function(){
+	socket.on('share', function(data){
 		console.log('user wants to share their video food');
+
+		obj = _.find(mock, function(obj) { return obj.id == data.id });
+
+		if(typeof obj === "undefined") {
+			// err
+			return next();
+		}
+
+		obj.isEnabled = data.enable;
+
+		socket.emit('isEnableChange', obj.isEnabled);
+
 	});
 });
-
 
 // start server
 http.listen(3000, function(){

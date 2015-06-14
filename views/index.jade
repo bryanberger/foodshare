@@ -1,23 +1,31 @@
 extends ./layout.jade
 
+block append scripts
+  script(src='/assets/js/raphael.2.1.0.min.js')
+  script(src='/assets/js/justgage.1.0.1.js')
+
 block content
-    main(role='main', class='container')
-      h2 Food being shared by your neighbors
-      ul.items
-        each obj in data
-          a(class='click-target thumbnail', href='/detail/#{obj.id}')
-            li(class='item row')
-              .col-xs-5
-                img#video(class='img-responsive', src='assets/imgs/placeholder.jpg')
-              .col-xs-7
-                h3= obj.title
-                p.tags
-                  each tag in obj.tags
-                    span(class='label label-default')= tag
-                p.freshness
-                  i(class='glyphicon glyphicon-ok')
-                  span Amazingly fresh!
-                .weight
-                  .progress
-                    div(class='progress-bar progress-bar-success', role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width:0")
-                 .eggPresent
+  main(role='main', class='container')
+    h2 Food being shared by your neighbors
+    ul.items
+      each obj in data
+        
+        a(id="item-#{obj.id}" class='click-target thumbnail enabled-#{obj.isEnabled}', href='/detail/#{obj.id}')
+          li(class='item row')
+            .col-xs-5
+              img#video(class='img-responsive', src='#{obj.imgFeed}')
+            .col-xs-7
+              h3= obj.title
+              p.tags
+                each tag in obj.tags
+                  span(class='label label-default')= tag
+              p.freshness
+                i(class='glyphicon glyphicon-ok')
+                span Amazingly fresh!
+              p.eggPresent
+                i Sorry, we are out of eggs
+                hr
+              .weight
+                span Amount of food
+                .progress
+                  div(class='progress-bar progress-bar-success', role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width:0")

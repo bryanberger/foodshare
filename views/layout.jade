@@ -5,8 +5,19 @@ include header.jade
       nav(class='navbar navbar-default')
         .container-fluid
           .navbar-header
+            button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#mainNav")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
             a(class='navbar-brand', href='/')
               img(src='/assets/imgs/logo.svg', alt='Food Share')
+          div#mainNav(class='navbar-collapse collapse')
+            ul.nav.navbar-nav.navbar-right
+              li.btn.btn-success.navbar-btn
+                a(href="/subscribers")
+                  i.glyphicon.glyphicon-user
+                  span  Neighbors Interested
 
     block content
     block footer

@@ -6,9 +6,9 @@ block append scripts
 
 block content
   main(role='main', class='container')
-    .detail.row
+    #item-0.detail.row
       .col-sm-12
-        img#video.img-responsive(src="/assets/imgs/placeholder.jpg")
+        img#video.img-responsive(src="#{data.imgFeed}")
     .row
       .col-sm-12
         h3= data.title
@@ -18,9 +18,10 @@ block content
         p.freshness
           i(class='glyphicon glyphicon-ok')
           span Amazingly fresh!
+        p.eggPresent
+          i Sorry, we are out of eggs
         hr
         #foodPercentage
-        .eggPresent
 
 block footer
   footer.container

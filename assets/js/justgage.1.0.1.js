@@ -12,7 +12,9 @@
 JustGage = function(config) { 
   
   if (!config.id) {alert("Missing id parameter for gauge!"); return false;} 
-  if (!document.getElementById(config.id)) {alert("No element with id: \""+config.id+"\" found!"); return false;} 
+  // if (!document.getElementById(config.id)) {alert("No element with id: \""+config.id+"\" found!"); return false;}
+  if (!document.getElementById(config.id)) {return false;} 
+
   
   // configurable parameters
   this.config = 

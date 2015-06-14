@@ -1,11 +1,23 @@
 [
 	{
+		"id": 0,
+		"title": "FirstBuild Fridge",
+		"persons": "FirstBuild Team",
+		"freshness": "100",
+		"quantity": "0",
+		"tags": ["Cheese", "Veg", "Fruit"],
+		"imgFeed": "http://10.1.24.42:8080/shot.jpg",
+		"isEnabled": false
+	},
+	{
 		"id": 1,
 		"title": "Bob and Nancy's Basket",
 		"persons": "Bob and Nancy",
 		"freshness": "62",
 		"quantity": "85",
-		"tags": ["BBQ", "Veg", "Fruit"]
+		"tags": ["BBQ", "Veg", "Fruit"],
+		"imgFeed": "/assets/imgs/placeholder.jpg",
+		"isEnabled": true
 	},
 	{
 		"id": 2,
@@ -13,7 +25,9 @@
 		"persons": "Jack and Jill",
 		"freshness": "92",
 		"quantity": "32",
-		"tags": ["Salad", "Organic Produce"]
+		"tags": ["Salad", "Organic Produce"],
+		"imgFeed": "/assets/imgs/placeholder2.jpg",
+		"isEnabled": true
 	},
 	{
 		"id": 3,
@@ -21,6 +35,8 @@
 		"persons": "William Klein",
 		"freshness": "75",
 		"quantity": "100",
-		"tags": ["Farm Eggs"]
+		"tags": ["Farm Eggs"],
+		"imgFeed": "/assets/imgs/placeholder3.jpg",
+		"isEnabled": true
 	}
 ]
