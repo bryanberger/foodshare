@@ -1,0 +1,11 @@
+include header.jade
+
+  body#splash
+    .splash-wrapper
+      a(href='/')
+        i.check.glyphicon.glypicon-ok
+      h4 We let #{data.persons} know that are interested in sharing food!
+  script.
+    setInterval(function(){
+      window.location = '/';
+    }, 3500);

@@ -1,0 +1,30 @@
+extends ./layout.jade
+
+block append scripts
+  script(src='/assets/js/raphael.2.1.0.min.js')
+  script(src='/assets/js/justgage.1.0.1.js')
+
+block content
+  main(role='main', class='container')
+    .detail.row
+      .col-sm-12
+        img#video.img-responsive(src="/assets/imgs/placeholder.jpg")
+    .row
+      .col-sm-12
+        h3= data.title
+        p.tags
+          each tag in obj.tags
+            span(class='label label-default')= tag
+        p.freshness
+          i(class='glyphicon glyphicon-ok')
+          span Amazingly fresh!
+        hr
+        #foodPercentage
+        .eggPresent
+
+block footer
+  footer.container
+    .row
+      .col-sm-12
+        p
+          button.btn.btn-success.btn-block.interested(data-id="#{data.id}") We are Interested!

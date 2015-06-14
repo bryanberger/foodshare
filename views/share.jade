@@ -1,0 +1,11 @@
+include header.jade
+
+  body#splash
+    .splash-wrapper
+      a(href='/')
+        i.check.glyphicon.glypicon-ok
+      h4 You are now sharing your food basket!
+  script.
+    setInterval(function(){
+      window.location = '/';
+    }, 3500);

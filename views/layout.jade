@@ -1,0 +1,20 @@
+include header.jade
+
+  body
+    header
+      nav(class='navbar navbar-default')
+        .container-fluid
+          .navbar-header
+            a(class='navbar-brand', href='/')
+              img(src='/assets/imgs/logo.svg', alt='Food Share')
+
+    block content
+    block footer
+      footer.container
+        .row
+          .col-sm-12
+            p
+              button(class='btn btn-success btn-block share') Share My Basket
+    block footer-scripts
+      script(src='/socket.io/socket.io.js')
+      script(src='/assets/js/client.js')

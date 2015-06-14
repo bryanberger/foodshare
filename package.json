@@ -1,0 +1,17 @@
+{
+  "name": "Foodshare",
+  "version": "1.0.0",
+  "description": "A community building food sharing platform",
+  "main": "server.js",
+  "author": "Bryan Berger",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "dotenv": "^1.1.0",
+    "express": "^4.12.4",
+    "firebase": "^2.2.7",
+    "jade": "^1.11.0",
+    "socket.io": "^1.3.5",
+    "underscore": "^1.8.3"
+  }
+}

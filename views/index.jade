@@ -1,0 +1,23 @@
+extends ./layout.jade
+
+block content
+    main(role='main', class='container')
+      h2 Food being shared by your neighbors
+      ul.items
+        each obj in data
+          a(class='click-target thumbnail', href='/detail/#{obj.id}')
+            li(class='item row')
+              .col-xs-5
+                img#video(class='img-responsive', src='assets/imgs/placeholder.jpg')
+              .col-xs-7
+                h3= obj.title
+                p.tags
+                  each tag in obj.tags
+                    span(class='label label-default')= tag
+                p.freshness
+                  i(class='glyphicon glyphicon-ok')
+                  span Amazingly fresh!
+                .weight
+                  .progress
+                    div(class='progress-bar progress-bar-success', role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width:0")
+                 .eggPresent

@@ -1,0 +1,111 @@
+.navbar-brand img {
+	height: 100%;
+}
+
+.navbar-default {
+	background: #8CC63F;
+}
+
+/*a.thumbnail:hover,
+a.thumbnail:focus,
+a.thumbnail.active {
+  border-color: #337ab7;
+}
+*/
+/*.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand {float:none;}
+*/
+.items {
+	margin: 0;
+	padding: 0;
+}
+.items li {
+	list-style: none;
+}
+
+.item h3 {
+	margin-top: 0;
+}
+
+.label {
+	margin-right: 4px;
+}
+
+.click-target:hover {
+	background: #EEEEEE;
+}
+
+#splash {
+	background: #8CC63F;
+	width: 100%;
+	height: 100%;
+}
+
+.splash-wrapper {
+	padding: 2em;
+	max-width: 640px;
+	margin: 8em auto 0;
+	text-align: center;
+}
+
+.splash-wrapper a {
+	margin-top: 4em;
+}
+
+.splash-wrapper img {
+	width: 100%;
+}
+
+.splash-wrapper .check {
+	font-size: 6em;
+	color: #fff;
+}
+
+.freshness,
+.freshness .best {
+	color: #71D528;
+}
+
+.freshness .verygood {
+	color: #8ABA25;
+}
+
+.freshness .okay {
+	color: #BDD13E;
+}
+
+.freshness .bad {
+	color: #DEA74D;
+}
+
+#foodPercentage {
+	margin-bottom: 3em;
+}
+
+footer {
+	margin-bottom: 5em;
+}
+
+h2 {
+	font-size: 12px;
+	background: #d2d2d2;
+	padding: 1em;
+	margin: 0 0 2em 0;
+	text-transform: uppercase;
+	color: #636363;
+}
+
+h4 {
+	color: #fff;
+	margin-top: 2em;
+}
+
+a,
+a:hover {
+	color: #8CC63F;
+}

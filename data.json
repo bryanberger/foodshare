@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"title": "Bob and Nancy's Basket",
+		"persons": "Bob and Nancy",
+		"freshness": "62",
+		"quantity": "85",
+		"tags": ["BBQ", "Veg", "Fruit"]
+	},
+	{
+		"id": 2,
+		"title": "Jack and Jill's Basket",
+		"persons": "Jack and Jill",
+		"freshness": "92",
+		"quantity": "32",
+		"tags": ["Salad", "Organic Produce"]
+	},
+	{
+		"id": 3,
+		"title": "William Klein's Basket",
+		"persons": "William Klein",
+		"freshness": "75",
+		"quantity": "100",
+		"tags": ["Farm Eggs"]
+	}
+]
