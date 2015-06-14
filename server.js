@@ -115,7 +115,7 @@ app.get('/share', function(req, res){
 });
 
 app.get('/splash', function(req, res){
-	res.sendFile(__dirname + '/splash.html');
+	res.render('splash');
 });
 
 // app.get('/notify', function(req, res){

@@ -1,2 +1,3 @@
-- run npm install
-- Haven't setup gulp or grunt yet, but not neccessary right now
+- run `npm install`
+- run `ngrok -subdomain=foodshare 3000` for testing purposes.
+- Haven't setup any build processes yet with grunt or gulp.
